@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logo"
+        android:src="@drawable/ic_launcher"
+        android:layout_gravity="center"
+        android:layout_margin="8dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/app_name"
+            android:id="@+id/app_name"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp" />
+
+<TableLayout 
+    android:layout_width="wrap_content" 
+    android:id="@+id/tableLayout3" 
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/app_name">
+    <TableRow android:id="@+id/tableRow3"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
+       		
+           <TextView
+               android:textAppearance="?android:attr/textAppearanceSmall"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/version_caption"
+               android:id="@+id/textView2"
+               android:layout_marginLeft="10dip" />
+		
+           <TextView
+               android:textAppearance="?android:attr/textAppearanceSmall"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/version"
+               android:id="@+id/textView3"
+               android:layout_marginLeft="8dp" />
+    </TableRow>
+</TableLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/copyright_info"
+            android:id="@+id/copyright"
+            android:layout_below="@+id/tableLayout3"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="10dp" />
+    </RelativeLayout>
+</LinearLayout>
