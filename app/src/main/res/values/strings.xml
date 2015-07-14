@@ -28,5 +28,7 @@
     <!-- About dialog -->
     <string name="action_about_notice">About</string>
     <string name="copyright_info">&#169; Mohammad Afaneh</string>
+    <string name="what_is_safestrap">Safestrap is a Bootstrap / Recovery for locked bootloader phones. is to avoid touching your primary system.</string>
+    <string name="Special_Thanks">Special Thanks To Hashcode for his hard work making Safestrap recovery, DeesTroy and TeamWin for all their hard work making TWRP</string>
 
 </resources>

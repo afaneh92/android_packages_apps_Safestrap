@@ -2,9 +2,9 @@
 <resources>
 
     <style name="Theme.Safestrap" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#700000</item>
-        <item name="colorPrimaryDark">#3D0000</item>
-        <item name="colorAccent">#a9deff</item>
+        <item name="colorPrimary">#006432</item>
+        <item name="colorPrimaryDark">#197346</item>
+        <item name="colorAccent">#4c926f</item>
     </style>
 
 </resources>

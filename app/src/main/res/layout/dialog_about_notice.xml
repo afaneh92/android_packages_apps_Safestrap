@@ -2,21 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/logo"
-        android:src="@drawable/ic_launcher"
-        android:layout_gravity="center"
-        android:layout_margin="8dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logo"
+        android:src="@drawable/ic_launcher"
+        android:layout_marginTop="20dip"
+        android:layout_margin="8dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -25,14 +26,15 @@
             android:text="@string/app_name"
             android:id="@+id/app_name"
             android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp" />
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="8dp"
+            android:textColor="#ff006432" />
 
 <TableLayout 
     android:layout_width="wrap_content" 
     android:id="@+id/tableLayout3" 
     android:layout_height="wrap_content"
+    android:layout_marginLeft="62dp"
     android:layout_below="@+id/app_name">
     <TableRow android:id="@+id/tableRow3"
            android:layout_width="wrap_content"
@@ -56,14 +58,36 @@
     </TableRow>
 </TableLayout>
 
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/what_is_safestrap"
+            android:id="@+id/whatissafestrap"
+            android:layout_below="@+id/tableLayout3"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="15dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/Special_Thanks"
+            android:id="@+id/SpecialThanks"
+            android:layout_below="@+id/whatissafestrap"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="10dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/copyright_info"
             android:id="@+id/copyright"
-            android:layout_below="@+id/tableLayout3"
+            android:layout_below="@+id/SpecialThanks"
             android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginTop="10dp" />
-    </RelativeLayout>
+
+</RelativeLayout>
 </LinearLayout>
