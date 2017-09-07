@@ -1,7 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- Safestrap activity -->
     <string name="app_name">Safestrap</string>
     <string name="install_recovery">Install Recovery</string>
     <string name="uninstall_recovery">Uninstall Recovery</string>
@@ -15,11 +12,11 @@
     <string name="recovery_status_disabled">Recovery Disabled</string>
     <string name="instructions"></string>
     <string name="version_caption">Version:</string>
-    <string name="version">3.75</string>
+    <string name="version">4.05</string>
     <string name="disclaimer">THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.</string>
-	<string name="status_installed">#66FF99</string>
-	<string name="status_notinstalled">#FF0000</string>
-	<string name="status_upgrade">#FFFF00</string>
+    <string name="status_installed">#66FF99</string>
+    <string name="status_notinstalled">#FF0000</string>
+    <string name="status_upgrade">#FFFF00</string>
     <string name="reboot_write_protect">Reboot to Write Protect Off Mode</string>
 
     <!-- Disclaimer dialog -->
@@ -29,6 +26,5 @@
     <string name="action_about_notice">About</string>
     <string name="copyright_info">&#169; Mohammad Afaneh</string>
     <string name="what_is_safestrap">Safestrap is a Bootstrap / Recovery for locked bootloader phones. is to avoid touching your primary system.</string>
-    <string name="Special_Thanks">Special Thanks To Hashcode for his hard work making Safestrap recovery, DeesTroy and TeamWin for all their hard work making TWRP</string>
-
+    <string name="special_thanks">Special Thanks To Hashcode for his hard work making Safestrap recovery, DeesTroy and TeamWin for all their hard work making TWRP</string>
 </resources>

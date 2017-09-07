@@ -1,5 +1,7 @@
 package com.afaneh.safestrap;
 
+import android.util.Log;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -9,13 +11,13 @@ import java.util.Enumeration;
 import java.util.Vector;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import android.util.Log;
 
 public class AssetControl {
-    public String LOGTAG = "Unknown App";
-	public String apkPath = "";
-	public String mAppRoot = "";
     final static String ZIP_FILTER = "assets";
+    static final int BUFSIZE = 5192;
+    public String LOGTAG = "Unknown App";
+    public String apkPath = "";
+    public String mAppRoot = "";
 
     void unzipAsset(String filename) {
         try {
@@ -24,7 +26,7 @@ public class AssetControl {
             ZipFile zip = new ZipFile(apkPath);
             Vector<ZipEntry> files = getAssets(zip);
             int zipFilterLength = ZIP_FILTER.length();
-            
+
             Enumeration<?> entries = files.elements();
             while (entries.hasMoreElements()) {
                 ZipEntry entry = (ZipEntry) entries.nextElement();
@@ -52,7 +54,7 @@ public class AssetControl {
             ZipFile zip = new ZipFile(apkPath);
             Vector<ZipEntry> files = getAssets(zip);
             int zipFilterLength = ZIP_FILTER.length();
-            
+
             Enumeration<?> entries = files.elements();
             while (entries.hasMoreElements()) {
                 ZipEntry entry = (ZipEntry) entries.nextElement();
@@ -70,8 +72,6 @@ public class AssetControl {
             Log.e(LOGTAG, "Error: " + e.getMessage());
         }
     }
-
-    static final int BUFSIZE = 5192;
 
     void copyStreams(InputStream is, FileOutputStream fos) {
         BufferedOutputStream os = null;
