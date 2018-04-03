@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.afaneh.safestrap.SafestrapActivity"
+    tools:context=".SafestrapActivity"
     tools:showIn="@layout/activity_safestrap">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -174,7 +174,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/version"
+                    android:text="@string/version_name"
                     android:id="@+id/textView3"
                     android:paddingLeft="10dip" />
             </TableRow>

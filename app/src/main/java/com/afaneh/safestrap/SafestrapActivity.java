@@ -1,17 +1,17 @@
 package com.afaneh.safestrap;
 
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +32,7 @@ public class SafestrapActivity extends AppCompatActivity {
     private Boolean rootCheck = false;
     private Boolean writeProtect = false;
 
-    /**
+    /*
      * Called when the activity is first created.
      */
     @Override
@@ -54,7 +54,7 @@ public class SafestrapActivity extends AppCompatActivity {
             public void onClick(View view) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(SafestrapActivity.this);
                 dialog.setCancelable(false);
-                dialog.setIcon(R.drawable.ic_launcher);
+                dialog.setIcon(R.mipmap.ic_launcher);
                 dialog.setTitle("About");
                 dialog.setMessage(getString(R.string.what_is_safestrap) + "\n\n" + getString(R.string.special_thanks) + "\n\n" + getString(R.string.copyright_info));
                 dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -83,7 +83,6 @@ public class SafestrapActivity extends AppCompatActivity {
             AssetControl unzip = new AssetControl();
             unzip.apkPath = getPackageCodePath();
             unzip.mAppRoot = getFilesDir().toString();
-            unzip.unzipAsset("/armeabi-v7a/busybox");
             unzip.unzipAsset("/busybox");
             unzip.unzipAsset("/recovery-check.sh");
             unzip.unzipAsset("/recovery-reboot.sh");
@@ -220,7 +219,7 @@ public class SafestrapActivity extends AppCompatActivity {
                     statusText.setText("Not installed");
                     buttonReboot.setEnabled(false);
                 } else {
-                    float check_vers = Float.valueOf(this.getString(R.string.version));
+                    float check_vers = Float.valueOf(this.getString(R.string.version_name));
                     if (vers == check_vers) {
                         statusText.setText("Installed");
                     } else if (vers > check_vers) {
@@ -255,7 +254,7 @@ public class SafestrapActivity extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         // show disclaimer....
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setIcon(R.drawable.ic_launcher);
+        builder.setIcon(R.mipmap.ic_launcher);
         builder.setTitle("Disclaimer");
         builder.setMessage(R.string.disclaimer);
         builder.setCancelable(false);
