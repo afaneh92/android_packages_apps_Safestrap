@@ -10,7 +10,6 @@
     <string name="system_status_caption">Safe System:</string>
     <string name="system_status_not_active">Not Active</string>
     <string name="recovery_status_disabled">Recovery Disabled</string>
-    <string name="instructions"></string>
     <string name="version_caption">Version:</string>
     <string name="version_code">406</string>
     <string name="version_name">4.06</string>
@@ -28,4 +27,14 @@
     <string name="copyright_info">&#169; Mohammad Afaneh</string>
     <string name="what_is_safestrap">Safestrap is a Bootstrap / Recovery for locked bootloader phones. is to avoid touching your primary system.</string>
     <string name="special_thanks">Special Thanks To Hashcode for his hard work making Safestrap recovery, DeesTroy and TeamWin for all their hard work making TWRP</string>
+
+    <!-- Recovery check -->
+    <string name="active">Active</string>
+    <string name="installed">Installed</string>
+    <string name="newer_version_installed">Newer Version Installed</string>
+    <string name="not_active">Not Active</string>
+    <string name="not_installed">Not installed</string>
+    <string name="not_rooted">Not Rooted</string>
+    <string name="old_version">Old Version</string>
+    <string name="write_protect_enabled">Write Protect Enabled</string>
 </resources>

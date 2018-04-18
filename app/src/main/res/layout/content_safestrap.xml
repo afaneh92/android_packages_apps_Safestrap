@@ -140,15 +140,6 @@
             android:textColor="#FFFFFF"
             android:background="@drawable/ripple_effect" />
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:id="@+id/textView1"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_width="wrap_content"
-            android:text="@string/instructions"
-            android:layout_margin="10dip"
-            android:layout_below="@+id/buttonRebootWriteProtect" />
-
         <TableLayout
             android:layout_width="match_parent"
             android:id="@+id/tableLayout3"

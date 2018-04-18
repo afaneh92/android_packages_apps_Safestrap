@@ -4,25 +4,26 @@ import android.os.Handler;
 import android.os.Message;
 
 import java.io.File;
+import com.topjohnwu.superuser.Shell;
 
-public class UninstallDialogThread extends Thread implements Runnable {
+public class UninstallDialogThread extends Thread {
     public Handler handler = null;
     public String packageCodePath = "";
     public File mAppRoot = null;
     public String LOGTAG = "";
 
-    protected void pause(int milli) {
+    private void pause(int milli) {
         try {
             Thread.sleep(milli);
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         }
     }
 
-    protected void reply(int arg1, int arg2, String text) {
+    private void reply(int arg1, int arg2, String text) {
         Message msg = new Message();
         msg.arg1 = arg1;
         msg.arg2 = arg2;
-        msg.obj = (Object) text;
+        msg.obj = text;
         if (handler != null) {
             handler.sendMessage(msg);
         }
@@ -39,18 +40,17 @@ public class UninstallDialogThread extends Thread implements Runnable {
             unzip.LOGTAG = LOGTAG;
             reply(1, 0, "Unpacking Files...");
             unzip.unzipAssets();
-            reply(1, 50, "Checking Busybox...");
+            reply(1, 50, "Checking Files...");
             String filesDir = mAppRoot.getAbsolutePath();
-            ExecuteAsRootBase.executecmd("chmod 755 " + filesDir + "/busybox");
-            ExecuteAsRootBase.executecmd("chmod 755 " + filesDir + "/*.sh");
+            Shell.Async.su("chmod 755 " + filesDir + "/*.sh");
             reply(1, 60, "Uninstalling...");
-            ExecuteAsRootBase.executecmd("sh " + filesDir + "/recovery-uninstall.sh " + filesDir);
+            Shell.Async.su("sh " + filesDir + "/recovery-uninstall.sh " + filesDir);
             reply(1, 90, "Cleaning Up...");
-            ExecuteAsRootBase.executecmd(filesDir + "/busybox rm -r " + filesDir + "/install-files");
+            Shell.Async.su(filesDir + "rm -r " + filesDir + "/install-files");
+            pause(1000);
             reply(0, 0, "Uninstall Complete.");
         } catch (Exception ex) {
             reply(0, 1, ex.getMessage());
         }
     }
-
 }

@@ -13,8 +13,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class AssetControl {
-    final static String ZIP_FILTER = "assets";
-    static final int BUFSIZE = 5192;
+    private final static String ZIP_FILTER = "assets";
+    private static final int BUFSIZE = 5192;
     public String LOGTAG = "Unknown App";
     public String apkPath = "";
     public String mAppRoot = "";
@@ -33,7 +33,12 @@ public class AssetControl {
                 String path = entry.getName().substring(zipFilterLength);
                 if (filename.equals(path)) {
                     File outputFile = new File(mAppRoot, path);
-                    outputFile.getParentFile().mkdirs();
+                    File parentDir = outputFile.getParentFile();
+                    if(parentDir !=null && ! parentDir.exists() ){
+                        if(!parentDir.mkdirs()){
+                            throw new IOException("error creating directories");
+                        }
+                    }
 
                     if (outputFile.exists() && entry.getSize() == outputFile.length() && zipLastModified < outputFile.lastModified())
                         continue;
@@ -60,7 +65,12 @@ public class AssetControl {
                 ZipEntry entry = (ZipEntry) entries.nextElement();
                 String path = entry.getName().substring(zipFilterLength);
                 File outputFile = new File(mAppRoot, path);
-                outputFile.getParentFile().mkdirs();
+                File parentDir = outputFile.getParentFile();
+                if(parentDir !=null && ! parentDir.exists() ){
+                    if(!parentDir.mkdirs()){
+                        throw new IOException("error creating directories");
+                    }
+                }
 
                 if (outputFile.exists() && entry.getSize() == outputFile.length() && zipLastModified < outputFile.lastModified())
                     continue;
@@ -73,7 +83,7 @@ public class AssetControl {
         }
     }
 
-    void copyStreams(InputStream is, FileOutputStream fos) {
+    private void copyStreams(InputStream is, FileOutputStream fos) {
         BufferedOutputStream os = null;
         try {
             byte data[] = new byte[BUFSIZE];
@@ -96,8 +106,8 @@ public class AssetControl {
         }
     }
 
-    public Vector<ZipEntry> getAssets(ZipFile zip) {
-        Vector<ZipEntry> list = new Vector<ZipEntry>();
+    private Vector<ZipEntry> getAssets(ZipFile zip) {
+        Vector<ZipEntry> list = new Vector<>();
         Enumeration<?> entries = zip.entries();
         while (entries.hasMoreElements()) {
             ZipEntry entry = (ZipEntry) entries.nextElement();

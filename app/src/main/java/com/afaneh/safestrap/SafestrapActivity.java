@@ -1,5 +1,6 @@
 package com.afaneh.safestrap;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +17,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SafestrapActivity extends AppCompatActivity {
+import com.topjohnwu.superuser.BusyBox;
+import com.topjohnwu.superuser.Shell;
+
+public class SafestrapActivity extends AppCompatActivity  {
 
     final static public String PREFS_NAME = "disclaimer";
     private TextView statusText = null;
@@ -37,18 +41,18 @@ public class SafestrapActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        statusText = (TextView) findViewById(R.id.textInstallStatus);
+        statusText = findViewById(R.id.textInstallStatus);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_safestrap);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        if (settings.getBoolean("accepted", false) == false) {
+        if (!settings.getBoolean("accepted", false)) {
             showDialog(0);
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,30 +73,32 @@ public class SafestrapActivity extends AppCompatActivity {
             }
         });
 
-        buttonInstall = (Button) findViewById(R.id.buttonInstall);
-        buttonUninstall = (Button) findViewById(R.id.buttonUninstall);
-        buttonReboot = (Button) findViewById(R.id.buttonReboot);
-        buttonRebootWriteProtect = (Button) findViewById(R.id.buttonRebootWriteProtect);
-        statusText = (TextView) findViewById(R.id.textInstallStatus);
-        messageText = (TextView) findViewById(R.id.textView1);
-        textSystemStatus = (TextView) findViewById(R.id.textSystemStatus);
+        buttonInstall = findViewById(R.id.buttonInstall);
+        buttonUninstall = findViewById(R.id.buttonUninstall);
+        buttonReboot = findViewById(R.id.buttonReboot);
+        buttonRebootWriteProtect = findViewById(R.id.buttonRebootWriteProtect);
+        statusText = findViewById(R.id.textInstallStatus);
+        textSystemStatus = findViewById(R.id.textSystemStatus);
 
-        rootCheck = ExecuteAsRootBase.canRunRootCommands();
+        rootCheck = Shell.rootAccess();
         if (rootCheck) {
+            // Set flags
+            Shell.setFlags(Shell.FLAG_REDIRECT_STDERR);
+            Shell.verboseLogging(BuildConfig.DEBUG);
+            // Use internal busybox
+            BusyBox.setup(this);
             /* For new MotoX we need to check write_protect=1 in cmdline */
             AssetControl unzip = new AssetControl();
             unzip.apkPath = getPackageCodePath();
             unzip.mAppRoot = getFilesDir().toString();
-            unzip.unzipAsset("/busybox");
             unzip.unzipAsset("/recovery-check.sh");
             unzip.unzipAsset("/recovery-reboot.sh");
             unzip.unzipAsset("/ss_function.sh");
             unzip.unzipAsset("/ss.config");
-            unzip = null;
-            ExecuteAsRootBase.executecmd("chmod 755 " + getFilesDir() + "/busybox");
-            ExecuteAsRootBase.executecmd("chmod 755 " + getFilesDir() + "/*.sh");
+            Shell.Sync.su("chmod 755 " + getFilesDir() + "/*.sh");
 
             buttonInstall.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("HandlerLeak")
                 public void onClick(View v) {
                     try {
                         pDialog = new ProgressDialog(v.getRootView().getContext());
@@ -127,6 +133,7 @@ public class SafestrapActivity extends AppCompatActivity {
             });
 
             buttonUninstall.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("HandlerLeak")
                 public void onClick(View v) {
                     try {
                         pDialog = new ProgressDialog(v.getRootView().getContext());
@@ -163,7 +170,7 @@ public class SafestrapActivity extends AppCompatActivity {
             buttonReboot.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     try {
-                        ExecuteAsRootBase.executecmd("sh " + getFilesDir().toString() + "/recovery-reboot.sh " + getFilesDir().toString());
+                        Shell.Sync.su("sh " + getFilesDir().toString() + "/recovery-reboot.sh " + getFilesDir().toString());
                         Runtime.getRuntime().exec(new String[]{"su", "-c", "reboot now"});
                     } catch (Exception ex) {
                         messageText.setText(ex.getMessage());
@@ -173,7 +180,7 @@ public class SafestrapActivity extends AppCompatActivity {
 
             buttonRebootWriteProtect.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    ExecuteAsRootBase.executecmd("reboot recovery");
+                    Shell.Sync.su("reboot recovery");
                 }
             });
         }
@@ -186,68 +193,63 @@ public class SafestrapActivity extends AppCompatActivity {
      */
     protected void setupControls() {
         /* Setup button */
-        try {
-            buttonRebootWriteProtect.setVisibility(View.GONE);
-            if (rootCheck) {
-                /* Check Version */
-                String inText = String.valueOf(ExecuteAsRootBase.executecmd("sh " + getFilesDir().toString() + "/recovery-check.sh " + getFilesDir().toString())).replace("[", "").replace("]", "");
-                String parts[] = inText.split(":");
-                String vers_s = null;
-                float vers = 0;
-                Boolean altbootmode = false;
-                if (parts != null) {
-                    if (parts.length >= 1) {
-                        if(!parts[0].isEmpty())
-                            vers_s = parts[0];
-                    }
-                    if (parts.length >= 2) {
-                        if (parts[1].equals("1")) altbootmode = true;
-                    }
-                    if (parts.length >= 3) {
-                        if (parts[2].equals("1")) {
-                            writeProtect = true;
-                        }
-                    }
+        buttonRebootWriteProtect.setVisibility(View.GONE);
+        if (rootCheck) {
+            /* Check Version */
+            String inText = String.valueOf(Shell.Sync.su("sh " + getFilesDir().toString() + "/recovery-check.sh " + getFilesDir().toString())).replace("[", "").replace("]", "");
+            String parts[] = inText.split(":");
+            String vers_s = null;
+            float vers = 0;
+            Boolean altbootmode = false;
+            if (parts.length >= 1) {
+                if(!parts[0].isEmpty())
+                    vers_s = parts[0];
+            }
+            if (parts.length >= 2) {
+                if (parts[1].equals("1")) altbootmode = true;
+            }
+            if (parts.length >= 3) {
+                if (parts[2].equals("1")) {
+                    writeProtect = true;
                 }
-                if (vers_s != null) {
-                    vers = Float.valueOf(vers_s);
-                }
-                buttonUninstall.setEnabled(true);
-                buttonInstall.setEnabled(true);
-                buttonReboot.setEnabled(true);
-                if (vers == 0) {
-                    statusText.setText("Not installed");
-                    buttonReboot.setEnabled(false);
-                } else {
-                    float check_vers = Float.valueOf(this.getString(R.string.version_name));
-                    if (vers == check_vers) {
-                        statusText.setText("Installed");
-                    } else if (vers > check_vers) {
-                        statusText.setText("Newer Version Installed");
-                        buttonInstall.setEnabled(false);
-                    } else {
-                        statusText.setText("Old Version");
-                    }
-                }
-                textSystemStatus.setText("Not Active");
-                /* setMessage(check); */
-                if (altbootmode) {
-                    textSystemStatus.setText("Active");
-                }
-                if (writeProtect) {
-                    statusText.setText("Write Protect Enabled");
-                    buttonUninstall.setEnabled(false);
-                    buttonInstall.setEnabled(false);
-                    buttonReboot.setEnabled(true);
-                    buttonRebootWriteProtect.setVisibility(View.VISIBLE);
-                }
+            }
+            if (vers_s != null) {
+                vers = Float.valueOf(vers_s);
+            }
+            buttonUninstall.setEnabled(true);
+            buttonInstall.setEnabled(true);
+            buttonReboot.setEnabled(true);
+            if (vers == 0) {
+                statusText.setText(R.string.not_installed);
+                buttonReboot.setEnabled(false);
             } else {
-                statusText.setText("Not Rooted");
+                float check_vers = Float.valueOf(this.getString(R.string.version_name));
+                if (vers == check_vers) {
+                    statusText.setText(R.string.installed);
+                } else if (vers > check_vers) {
+                    statusText.setText(R.string.newer_version_installed);
+                    buttonInstall.setEnabled(false);
+                } else {
+                    statusText.setText(R.string.old_version);
+                }
+            }
+            textSystemStatus.setText(R.string.not_active);
+            /* setMessage(check); */
+            if (altbootmode) {
+                textSystemStatus.setText(R.string.active);
+            }
+            if (writeProtect) {
+                statusText.setText(R.string.write_protect_enabled);
                 buttonUninstall.setEnabled(false);
                 buttonInstall.setEnabled(false);
-                buttonReboot.setEnabled(false);
+                buttonReboot.setEnabled(true);
+                buttonRebootWriteProtect.setVisibility(View.VISIBLE);
             }
-        } finally {
+        } else {
+            statusText.setText(R.string.not_rooted);
+            buttonUninstall.setEnabled(false);
+            buttonInstall.setEnabled(false);
+            buttonReboot.setEnabled(false);
         }
     }
 
@@ -267,14 +269,13 @@ public class SafestrapActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putBoolean("accepted", true);
                 // Commit the edits!
-                editor.commit();
+                editor.apply();
             }
         }).setNegativeButton("Disagree", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 System.exit(0);
             }
         });
-        AlertDialog alert = builder.create();
-        return alert;
+        return builder.create();
     }
 }
