@@ -47,6 +47,12 @@ public class SafestrapActivity extends AppCompatActivity  {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Use internal busybox
+        BusyBox.setup(this);
+        // Set flags
+        Shell.setFlags(Shell.FLAG_REDIRECT_STDERR);
+        Shell.verboseLogging(BuildConfig.DEBUG);
+
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         if (!settings.getBoolean("accepted", false)) {
             showDialog(0);
@@ -82,11 +88,6 @@ public class SafestrapActivity extends AppCompatActivity  {
 
         rootCheck = Shell.rootAccess();
         if (rootCheck) {
-            // Set flags
-            Shell.setFlags(Shell.FLAG_REDIRECT_STDERR);
-            Shell.verboseLogging(BuildConfig.DEBUG);
-            // Use internal busybox
-            BusyBox.setup(this);
             /* For new MotoX we need to check write_protect=1 in cmdline */
             AssetControl unzip = new AssetControl();
             unzip.apkPath = getPackageCodePath();
