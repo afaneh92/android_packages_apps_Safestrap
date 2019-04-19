@@ -7,10 +7,10 @@ import java.io.File;
 import com.topjohnwu.superuser.Shell;
 
 public class InstallDialogThread extends Thread {
-    public Handler handler = null;
-    public String packageCodePath = "";
-    public File mAppRoot = null;
-    public String LOGTAG = "";
+    Handler handler = null;
+    String packageCodePath = "";
+    File mAppRoot = null;
+    String LOGTAG = "";
 
     private void pause(int milli) {
         try {
@@ -42,11 +42,11 @@ public class InstallDialogThread extends Thread {
             unzip.unzipAssets();
             reply(1, 50, "Checking Files...");
             String filesDir = mAppRoot.getAbsolutePath();
-            Shell.Async.su("chmod 755 " + filesDir + "/*.sh");
+            Shell.su("chmod 755 " + filesDir + "/*.sh").exec();
             reply(1, 60, "Running Installation Script...");
-            Shell.Async.su("sh " + filesDir + "/recovery-install.sh " + filesDir);
+            Shell.su(filesDir + "/recovery-install.sh " + filesDir).exec();
             reply(1, 90, "Cleaning Up...");
-            Shell.Async.su(filesDir + "rm -r " + filesDir + "/install-files");
+            Shell.su(filesDir + "rm -r " + filesDir + "/install-files").exec();
             pause(1000);
             reply(0, 0, "Installation Complete.");
         } catch (Exception ex) {

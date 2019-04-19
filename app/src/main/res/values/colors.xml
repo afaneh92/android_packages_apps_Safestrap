@@ -4,7 +4,6 @@
     <color name="colorPrimaryDark">#01579b</color>
     <color name="colorAccent">#03a9f4</color>
 
-    <color name="white">#FFFFFF</color>
     <color name="colorRipple">@color/colorPrimary</color>
     <color name="colorButton">#616161</color>
 </resources>

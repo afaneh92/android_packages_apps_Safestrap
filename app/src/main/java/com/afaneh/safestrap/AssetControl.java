@@ -12,12 +12,12 @@ import java.util.Vector;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-public class AssetControl {
+class AssetControl {
     private final static String ZIP_FILTER = "assets";
     private static final int BUFSIZE = 5192;
-    public String LOGTAG = "Unknown App";
-    public String apkPath = "";
-    public String mAppRoot = "";
+    String LOGTAG = "Unknown App";
+    String apkPath = "";
+    String mAppRoot = "";
 
     void unzipAsset(String filename) {
         try {
@@ -117,5 +117,4 @@ public class AssetControl {
         }
         return list;
     }
-
 }
