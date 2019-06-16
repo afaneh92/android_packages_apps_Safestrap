@@ -6,9 +6,12 @@ android {
         applicationId "com.afaneh.safestrap"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 409
-        versionName "@string/version_name"
+        versionCode 410
+        versionName "4.10"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    applicationVariants.all { variant ->
+        variant.resValue "string", "version_name", variant.versionName
     }
     buildTypes {
         release {
@@ -28,13 +31,13 @@ repositories {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
-    implementation 'com.google.android.material:material:1.1.0-alpha05'
+    implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
+    implementation 'com.google.android.material:material:1.1.0-alpha07'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     /* topjohnwu's libsu */
-    def libsuVersion = '2.4.0'
+    def libsuVersion = '2.5.0'
     implementation "com.github.topjohnwu.libsu:core:${libsuVersion}"
     /* Optional: For using com.topjohnwu.superuser.io classes */
     implementation "com.github.topjohnwu.libsu:io:${libsuVersion}"
