@@ -6,8 +6,8 @@ android {
         applicationId "com.afaneh.safestrap"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 410
-        versionName "4.10"
+        versionCode 411
+        versionName "4.11"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     applicationVariants.all { variant ->
@@ -31,7 +31,7 @@ repositories {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
+    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     implementation 'com.google.android.material:material:1.1.0-alpha07'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

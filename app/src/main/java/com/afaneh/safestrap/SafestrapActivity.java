@@ -2,23 +2,26 @@ package com.afaneh.safestrap;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.os.Bundle;
-import android.view.View;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.topjohnwu.superuser.BusyBoxInstaller;
-import com.topjohnwu.superuser.Shell;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import com.topjohnwu.superuser.BusyBoxInstaller;
+import com.topjohnwu.superuser.Shell;
 
 public class SafestrapActivity extends AppCompatActivity {
 
@@ -37,10 +40,10 @@ public class SafestrapActivity extends AppCompatActivity {
     private Boolean writeProtect = false;
 
     static {
-        // Configuration
+        /* Configuration */
         Shell.Config.setFlags(Shell.FLAG_REDIRECT_STDERR);
         Shell.Config.verboseLogging(BuildConfig.DEBUG);
-        // Use internal busybox
+        /* Use internal busybox */
         Shell.Config.addInitializers(BusyBoxInstaller.class);
     }
 
@@ -65,12 +68,17 @@ public class SafestrapActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
             AlertDialog.Builder dialog = new AlertDialog.Builder(SafestrapActivity.this);
             dialog.setCancelable(false);
-            dialog.setIcon(R.mipmap.ic_launcher);
+            dialog.setIcon(R.mipmap.ic_launcher_foreground);
             dialog.setTitle(R.string.action_about_notice);
             dialog.setMessage(getString(R.string.what_is_safestrap) + "\n\n" + getString(R.string.special_thanks) + "\n\n" + getString(R.string.copyright_info));
             dialog.setPositiveButton("OK", (dialog1, id) -> {
                 //Action for "OK".
             });
+            dialog.setNeutralButton("Donate", (dialog1, id) -> {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.paypal.me/mohammadafaneh"));
+                startActivity(browserIntent);
+            });
+
 
             final AlertDialog alert = dialog.create();
             alert.show();
@@ -183,7 +191,7 @@ public class SafestrapActivity extends AppCompatActivity {
         if (rootCheck) {
             /* Check Version */
             String inText = String.valueOf(Shell.su(getFilesDir().toString() + "/recovery-check.sh " + getFilesDir().toString()).exec().getOut()).replace("[", "").replace("]", "");
-            String parts[] = inText.split(":");
+            String[] parts = inText.split(":");
             String vers_s = null;
             float vers = 0;
             boolean altbootmode = false;
@@ -239,21 +247,25 @@ public class SafestrapActivity extends AppCompatActivity {
         }
     }
 
+    /*
+     * Show the disclaimer....
+     */
     protected Dialog onCreateDialog(int id) {
-        // show disclaimer....
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setIcon(R.mipmap.ic_launcher_foreground);
         builder.setTitle(R.string.dialog_disclaimer_title);
         builder.setMessage(R.string.disclaimer);
         builder.setCancelable(false);
         builder.setPositiveButton("Agree", (dialog, id1) -> {
-            // and, if the user accept, you can execute something like this:
-            // We need an Editor object to make preference changes.
-            // All objects are from android.context.Context
+            /*
+             * and, if the user accept, you can execute something like this:
+             * We need an Editor object to make preference changes.
+             * All objects are from android.context.Context
+             */
             SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
             SharedPreferences.Editor editor = settings.edit();
             editor.putBoolean("accepted", true);
-            // Commit the edits!
+            /* Commit the edits! */
             editor.apply();
         }).setNegativeButton("Disagree", (dialog, id12) -> System.exit(0));
         return builder.create();

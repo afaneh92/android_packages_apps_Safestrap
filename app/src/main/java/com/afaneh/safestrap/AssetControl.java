@@ -86,7 +86,7 @@ class AssetControl {
     private void copyStreams(InputStream is, FileOutputStream fos) {
         BufferedOutputStream os = null;
         try {
-            byte data[] = new byte[BUFSIZE];
+            byte[] data = new byte[BUFSIZE];
             int count;
             os = new BufferedOutputStream(fos, BUFSIZE);
             while ((count = is.read(data, 0, BUFSIZE)) != -1) {
