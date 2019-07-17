@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_safestrap"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".SafestrapActivity"
-    tools:showIn="@layout/activity_safestrap">
+    tools:context=".SafestrapActivity">
 
     <RelativeLayout
         android:layout_marginTop="20dip"
@@ -17,7 +18,7 @@
             android:id="@+id/textLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dip"
+            android:layout_margin="@dimen/layout_margin"
             android:orientation="horizontal">
 
             <TextView
@@ -26,7 +27,7 @@
                 android:text="@string/recovery_state_caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dip" />
+                android:padding="@dimen/text_padding" />
 
             <TextView
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -34,7 +35,7 @@
                 android:text="@string/recovery_state_not_installed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dip" />
+                android:padding="@dimen/text_padding" />
         </LinearLayout>
 
         <LinearLayout
@@ -42,7 +43,7 @@
             android:layout_below="@+id/textLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dip"
+            android:layout_margin="@dimen/layout_margin"
             android:orientation="vertical">
 
             <Button
@@ -50,8 +51,8 @@
                 android:text="@string/install_recovery"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dip"
-                android:textColor="#FFFFFF"
+                android:layout_margin="@dimen/button_margin"
+                android:textColor="@color/colorButtonText"
                 android:background="@drawable/ripple_effect" />
 
             <Button
@@ -59,8 +60,8 @@
                 android:text="@string/uninstall_recovery"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dip"
-                android:textColor="#FFFFFF"
+                android:layout_margin="@dimen/button_margin"
+                android:textColor="@color/colorButtonText"
                 android:background="@drawable/ripple_effect" />
         </LinearLayout>
 
@@ -69,7 +70,7 @@
             android:layout_below="@+id/buttonLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dip"
+            android:layout_margin="@dimen/layout_margin"
             android:orientation="horizontal">
 
             <TextView
@@ -78,7 +79,7 @@
                 android:text="@string/system_status_caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dip" />
+                android:padding="@dimen/text_padding" />
 
             <TextView
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -86,7 +87,7 @@
                 android:text="@string/system_status_not_active"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dip" />
+                android:padding="@dimen/text_padding" />
         </LinearLayout>
 
         <LinearLayout
@@ -94,7 +95,7 @@
             android:layout_below="@+id/textLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dip"
+            android:layout_margin="@dimen/layout_margin"
             android:orientation="vertical">
 
             <Button
@@ -102,8 +103,8 @@
                 android:text="@string/reboot_recovery"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dip"
-                android:textColor="#FFFFFF"
+                android:layout_margin="@dimen/button_margin"
+                android:textColor="@color/colorButtonText"
                 android:background="@drawable/ripple_effect" />
 
             <Button
@@ -111,8 +112,8 @@
                 android:text="@string/reboot_write_protect"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dip"
-                android:textColor="#FFFFFF"
+                android:layout_margin="@dimen/button_margin"
+                android:textColor="@color/colorButtonText"
                 android:background="@drawable/ripple_effect" />
         </LinearLayout>
 
@@ -121,7 +122,7 @@
             android:layout_below="@+id/buttonLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dip"
+            android:layout_margin="@dimen/layout_margin"
             android:orientation="horizontal">
 
             <TextView
@@ -130,7 +131,7 @@
                 android:text="@string/version_caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp" />
+                android:padding="@dimen/text_padding" />
 
             <TextView
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -138,7 +139,7 @@
                 android:text="@string/version_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dip" />
+                android:padding="@dimen/text_padding" />
         </LinearLayout>
 
     </RelativeLayout>

@@ -1,5 +1,5 @@
 <resources>
-    <!-- App name -->
+     <!-- App name -->
     <string name="app_name">Safestrap</string>
     <!-- Main buttons -->
     <string name="install_recovery">Install Recovery</string>

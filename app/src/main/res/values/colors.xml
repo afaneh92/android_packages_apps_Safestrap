@@ -6,4 +6,5 @@
 
     <color name="colorRipple">@color/colorPrimary</color>
     <color name="colorButton">#616161</color>
+    <color name="colorButtonText">#ffffff</color>
 </resources>
